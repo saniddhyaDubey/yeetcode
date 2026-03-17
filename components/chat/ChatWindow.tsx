@@ -1,10 +1,5 @@
 import { useEffect, useRef } from "react";
-
-interface Message {
-  id: number;
-  text: string;
-  sender: "user" | "bot";
-}
+import { Message } from "@/lib/types";
 
 interface ChatWindowProps {
   messages: Message[];
@@ -14,7 +9,6 @@ const ChatWindow = ({ messages }: ChatWindowProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Auto-scroll to bottom when new message arrives
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
@@ -23,7 +17,9 @@ const ChatWindow = ({ messages }: ChatWindowProps) => {
   return (
     <div className="flex flex-col h-full bg-card">
       <div className="px-4 py-3 border-b border-border">
-        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Chat</h3>
+        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+          Chat
+        </h3>
       </div>
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3">

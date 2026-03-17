@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Check } from "lucide-react";
@@ -16,33 +18,29 @@ const difficultyColor: Record<string, string> = {
   Hard: "text-red-400",
 };
 
-interface Props {
+interface QuestionSelectorProps {
   selected: string | null;
   onSelect: (id: string) => void;
 }
 
-const QuestionSelector = ({ selected, onSelect }: Props) => {
+const QuestionSelector = ({ selected, onSelect }: QuestionSelectorProps) => {
   const [open, setOpen] = useState(false);
   const selectedQuestion = questions.find((q) => q.id === selected);
 
   return (
     <div className="relative">
-      {/* Trigger */}
       <button
         onClick={() => setOpen(!open)}
         className="flex w-full items-center justify-between rounded-xl border border-border bg-card px-5 py-4 text-left transition-colors hover:border-primary/40 focus:outline-none focus:ring-2 focus:ring-ring"
       >
         <span className={selectedQuestion ? "text-foreground" : "text-muted-foreground"}>
-          {selectedQuestion
-            ? selectedQuestion.label
-            : "Select a coding challenge..."}
+          {selectedQuestion ? selectedQuestion.label : "Select a coding challenge..."}
         </span>
         <ChevronDown
           className={`h-5 w-5 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
 
-      {/* Dropdown */}
       <AnimatePresence>
         {open && (
           <motion.ul

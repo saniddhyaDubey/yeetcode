@@ -1,43 +1,36 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Code2, Sparkles, ArrowRight } from "lucide-react";
-import { QUESTIONS } from "./components/questions";
+import { QUESTIONS } from "@/lib/questions";
+import { setupInterview } from "@/lib/interviewApi";
+import { Difficulty } from "@/lib/types";
 
-type Difficulty = "Easy" | "Medium" | "Hard";
+const difficulties: { level: Difficulty; color: string }[] = [
+  { level: "Easy", color: "text-green-500" },
+  { level: "Medium", color: "text-yellow-500" },
+  { level: "Hard", color: "text-red-500" },
+];
 
-const Index = () => {
+const HomePage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | null>(null);
-
-  const difficulties: { level: Difficulty; color: string }[] = [
-    { level: "Easy", color: "text-green-500" },
-    { level: "Medium", color: "text-yellow-500" },
-    { level: "Hard", color: "text-red-500" }
-  ];
 
   const handleStartInterview = async () => {
     if (!selectedDifficulty) return;
 
     const questionData = QUESTIONS[selectedDifficulty];
 
-    // Send setup to backend
     try {
-      await fetch('http://localhost:8080/api/interview/setup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          difficulty: selectedDifficulty,
-          question: questionData.question,
-          timer: questionData.timer
-        })
-      });
-
-      // Redirect to interview playground
+      await setupInterview(
+        selectedDifficulty,
+        questionData.question,
+        questionData.timer
+      );
       window.location.href = `https://localhost:3001/playground?difficulty=${selectedDifficulty}`;
     } catch (error) {
-      console.error('Setup failed:', error);
-      alert('Failed to start interview. Please try again.');
+      console.error("Setup failed:", error);
+      alert("Failed to start interview. Please try again.");
     }
   };
 
@@ -93,11 +86,15 @@ const Index = () => {
             onClick={() => setSelectedDifficulty(level)}
             className={`relative rounded-lg border px-8 py-4 font-display text-lg font-semibold transition-all hover:scale-105 ${
               selectedDifficulty === level
-                ? 'border-primary bg-primary/10 shadow-lg shadow-primary/20'
-                : 'border-border bg-card hover:border-primary/50'
+                ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+                : "border-border bg-card hover:border-primary/50"
             }`}
           >
-            <span className={selectedDifficulty === level ? color : 'text-muted-foreground'}>
+            <span
+              className={
+                selectedDifficulty === level ? color : "text-muted-foreground"
+              }
+            >
               {level}
             </span>
           </button>
@@ -121,7 +118,7 @@ const Index = () => {
         )}
       </AnimatePresence>
 
-      {/* Footer hint */}
+      {/* Footer */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -134,4 +131,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default HomePage;

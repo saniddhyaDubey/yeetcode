@@ -10,63 +10,56 @@ interface TextEditorProps {
   onTimeUp: () => void;
 }
 
-const TextEditor = ({ isRecording, isResponding, text, setText, timerLimit, onTimeUp }: TextEditorProps) => {
-
+const TextEditor = ({
+  isRecording,
+  isResponding,
+  text,
+  setText,
+  timerLimit,
+  onTimeUp,
+}: TextEditorProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const timeUpCalledRef = useRef(false);
 
   useEffect(() => {
-    // Start the timer
     intervalRef.current = setInterval(() => {
-      setElapsedTime(prev => prev + 1);
+      setElapsedTime((prev) => prev + 1);
     }, 1000);
 
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
-  // Check if time is up
   useEffect(() => {
-    console.log('⏱️ Timer check:', elapsedTime, 'vs limit:', timerLimit * 60);
-    
     if (elapsedTime >= timerLimit * 60) {
-      console.log('🛑 STOPPING TIMER NOW!');
-      timeUpCalledRef.current = true;
-
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current);
       onTimeUp();
-
     }
-  }, [elapsedTime, timerLimit]);
+  }, [elapsedTime, timerLimit, onTimeUp]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between px-5 py-3 border-b border-border">
         <div className="flex items-center gap-3">
-          <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">Editor</h2>
-          
+          <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+            Editor
+          </h2>
+
           <div className="relative">
             {isResponding ? (
               <MicOff className="w-4 h-4 text-muted-foreground" />
             ) : (
-              <Mic 
+              <Mic
                 className={`w-4 h-4 transition-colors ${
-                  isRecording ? 'text-red-500 animate-pulse' : 'text-primary'
-                }`} 
+                  isRecording ? "text-red-500 animate-pulse" : "text-primary"
+                }`}
               />
             )}
           </div>
@@ -77,9 +70,12 @@ const TextEditor = ({ isRecording, isResponding, text, setText, timerLimit, onTi
             {formatTime(elapsedTime)}
           </span>
         </div>
-        
-        <span className="text-xs text-muted-foreground">{text?.length || 0} chars</span>
+
+        <span className="text-xs text-muted-foreground">
+          {text?.length || 0} chars
+        </span>
       </div>
+
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}

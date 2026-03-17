@@ -17,7 +17,10 @@ const RulesModal = ({ onClose }: RulesModalProps) => {
       >
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-bold">Interview Guidelines</h3>
-          <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
+          <button
+            onClick={onClose}
+            className="text-muted-foreground hover:text-foreground"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -29,7 +32,9 @@ const RulesModal = ({ onClose }: RulesModalProps) => {
           </li>
           <li className="flex gap-2">
             <span className="text-primary">•</span>
-            <span>Everything will be shared by your interviewer about the interview</span>
+            <span>
+              Everything will be shared by your interviewer about the interview
+            </span>
           </li>
         </ul>
 
