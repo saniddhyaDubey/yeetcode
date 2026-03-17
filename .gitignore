@@ -12,3 +12,4 @@ dist/
 *.tsbuildinfo
 next-env.d.ts
 .cache/
+.claude/
