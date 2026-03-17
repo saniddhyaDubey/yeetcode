@@ -1,61 +1,52 @@
 # YeetCode
 
-An AI-powered mock interview platform. Pick a difficulty, get a coding problem, and do a real-time voice interview with an AI interviewer — then get a scored evaluation at the end.
+**Practice coding interviews the way they actually happen — out loud.**
 
-## Tech Stack
+Most developers grind LeetCode alone, in silence, with unlimited time and no pressure. Real interviews don't work like that. YeetCode puts you in an interview-like environment where you talk through your thinking, write your solution, and get evaluated on both — just like the real thing.
 
-- **Next.js 16** (App Router) + React 19 + TypeScript
-- **Tailwind CSS 4** — dark theme with OKLCH color variables
-- **Framer Motion** — UI animations
-- **WebSockets** — real-time audio streaming
-- **Backend** — expects a server at `localhost:8080` (separate repo)
+---
 
-## Getting Started
+## What is YeetCode?
 
-### Prerequisites
+YeetCode is an AI-powered mock interview platform built for developers who want to get better at technical interviews, not just at solving puzzles.
 
-- Node.js 18+
-- Backend server running at `localhost:8080`
+You pick a difficulty, get a coding problem, and have a live voice conversation with an AI interviewer while you write your solution. When the timer runs out, you get a scored breakdown of your performance — communication, problem-solving approach, and solution quality.
 
-### Install & Run
+No sign-up required. No setup. Just practice.
 
-```bash
-npm install
+---
 
-# HTTP (development)
-npm run dev
+## How It Works
 
-# HTTPS (required for mic access in most browsers)
-npm run dev:https
-```
+**1. Pick your difficulty**
+Choose Easy, Medium, or Hard. Each level comes with a real interview-style problem and a time limit that matches what you'd get in an actual interview round.
 
-The app runs on `http://localhost:3000` (or `https://localhost:3001` for HTTPS).
+**2. Talk and code simultaneously**
+The AI interviewer listens to you in real time. Explain your approach, ask clarifying questions, think out loud. Write your solution in the editor while the conversation flows naturally.
 
-### Environment
+**3. Get evaluated**
+When time's up, your conversation and solution are analysed together. You get a score breakdown — not just "did you solve it" but how well you communicated and how you approached the problem.
 
-No `.env` file required by default. Backend URL and WebSocket URL are configured in:
-- `lib/interviewApi.ts` — REST API base URL
-- `hooks/useWebSocket.ts` — WebSocket URL
+---
 
-## Project Structure
+## Why This Exists
 
-```
-app/               # Next.js routes (pages only — keep thin)
-components/        # UI components grouped by feature
-hooks/             # Custom React hooks (all logic lives here)
-lib/               # Types, data, utilities, and API calls
-public/            # Static assets
-```
+Technical interviews are a skill of their own. You can know every algorithm and still freeze when someone's watching. The only way to get better is to practice under conditions that actually feel like interviews — time pressure, someone listening, explaining your reasoning as you go.
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for a full breakdown.
+YeetCode is built to give developers that practice, without needing to find a partner, schedule time, or pay for a coach.
 
-## User Flow
+---
 
-1. **Home (`/`)** — Select difficulty (Easy / Medium / Hard), hit Start Interview
-2. **Backend setup** — Question and difficulty sent to backend via REST
-3. **Playground (`/playground`)** — Voice interview starts; audio streams over WebSocket
-4. **Evaluation** — On timer expiry, conversation is posted to backend for scoring
+## Built With
+
+- **Next.js 16** + React 19 + TypeScript
+- **Tailwind CSS 4** with a custom dark theme
+- **Framer Motion** for UI animations
+- **WebSockets** for real-time voice streaming
+- **AI backend** for transcription, responses, and evaluation
+
+---
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+This is an active project. If you want to contribute, see [CONTRIBUTING.md](CONTRIBUTING.md) for the codebase structure and guidelines.
